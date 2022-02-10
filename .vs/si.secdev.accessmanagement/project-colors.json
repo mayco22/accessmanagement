@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "13d2c459-1b54-4ee3-9a5f-1a901b5e1303": {
+      "ProjectGuid": "13d2c459-1b54-4ee3-9a5f-1a901b5e1303",
+      "DisplayName": "si.secdev.accessmanagement",
+      "ColorIndex": 0
+    },
+    "651814aa-a89a-451c-82c4-5186ae1ba3ab": {
+      "ProjectGuid": "651814aa-a89a-451c-82c4-5186ae1ba3ab",
+      "DisplayName": "si.secdev.accessmanagement.database",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

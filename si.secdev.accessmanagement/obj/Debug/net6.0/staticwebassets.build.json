@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "0DbDER67b4oZcaPKUwT7zF02yFFQOrmuk86DpMBESkA=",
+  "Source": "si.secdev.accessmanagement",
+  "BasePath": "_content/si.secdev.accessmanagement",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
