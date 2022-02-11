@@ -14,5 +14,8 @@
 
         [JsonProperty("scopes_supported")]
         public string[]? ScopesSuported { get; set; }
+
+        [JsonProperty("comapny")]
+        public string? comapny { get; set; }
     }
 }

@@ -16,7 +16,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7087;http://localhost:5087",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "COMPANY_AZURE": "https://login.microsoftonline.com/3737367d-87d3-46ca-b00f-21b50c428b5e/v2.0/.well-known/openid-configuration"
       },
       "DefaultConnection": {
         "ConnectionString": "user=userdb;pass=3J2$%Zw&6ufG;"
@@ -31,5 +32,7 @@
       }
     }
   },
-  "well-known": "https://login.microsoftonline.com/3737367d-87d3-46ca-b00f-21b50c428b5e/v2.0/.well-known/openid-configuration"
+  "company": {
+    "azure": "https://login.microsoftonline.com/3737367d-87d3-46ca-b00f-21b50c428b5e/v2.0/.well-known/openid-configuration"
+  }
 }

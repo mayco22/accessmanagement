@@ -10,14 +10,23 @@ namespace si.secdev.accessmanagement.Controllers
     [ApiController]
     public class ConnectController : ControllerBase
     {
-        [HttpGet("authorize")]
-        public async Task<ActionResult> Authorize([FromQuery] Login @event)
+        private readonly IConfiguration _configuration;
+        
+        public ConnectController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        
+        [HttpGet("{company}/authorize")]
+        public async Task<ActionResult> Authorize(string company, [FromQuery] Login @event)
         {
             try
             {
-                //Valida scope e retorna a url de login
-                AuthorizeResponse auth = new AuthorizeResponse();
-                string Url = auth.getAuthorizeResponse(@event);
+                if (!_configuration.GetSection("COMPANY_" + company.ToUpper()).Exists())
+                    return Unauthorized("The company is not implemented");
+                
+                AuthorizeResponse authorizeResponse = new(_configuration);
+                string Url = await authorizeResponse.getAuthorizeResponse(company, @event);
                 return Redirect(Url);
             }
             catch (Exception ex)
