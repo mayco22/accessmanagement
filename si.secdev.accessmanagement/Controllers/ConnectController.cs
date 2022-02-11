@@ -26,7 +26,7 @@ namespace si.secdev.accessmanagement.Controllers
                     return Unauthorized("The company is not implemented");
                 
                 AuthorizeResponse authorizeResponse = new(_configuration);
-                string Url = await authorizeResponse.getAuthorizeResponse(company, @event);
+                string Url = await authorizeResponse.GetAuthorizeResponse(company, @event);
                 return Redirect(Url);
             }
             catch (Exception ex)
