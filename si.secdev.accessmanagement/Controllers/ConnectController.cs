@@ -35,11 +35,14 @@ namespace si.secdev.accessmanagement.Controllers
             }
         }
 
-        [HttpGet("token")]
-        public async Task<ActionResult> GetToken()
+        [HttpPost("{company}/token")]
+        public async Task<ActionResult> GetToken(string company, [FromQuery] Login @event)
         {
             try
             {
+                if (!_configuration.GetSection("COMPANY_" + company.ToUpper()).Exists())
+                    return Unauthorized("The company is not implemented");
+
                 string jsonContent = "{ 'access_token': '', 'token_type': '', 'expires_in': '', 'refresh_token': '' }";
                 Token tok = JsonConvert.DeserializeObject<Token>(jsonContent);
                 return Ok(tok);
@@ -50,10 +53,16 @@ namespace si.secdev.accessmanagement.Controllers
             }
         }
 
-        [HttpGet("logout")]
-        public async Task<ActionResult> Logout([FromQuery] Logout @event)
+        [HttpGet("{company}/logout")]
+        public async Task<ActionResult> Logout(string company, [FromQuery] Logout @event)
         {
-            return Redirect("");
+            if (!_configuration.GetSection("COMPANY_" + company.ToUpper()).Exists())
+                return Unauthorized("The company is not implemented");
+
+            LougoutResponse logoutResponse = new(_configuration);
+            string responseRedirectUrl = logoutResponse.GetLougoutResponse(company, @event);
+
+            return Redirect(responseRedirectUrl);
         }
     }
 }

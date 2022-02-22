@@ -3,20 +3,20 @@ using si.secdev.accessmanagement.Models;
 
 namespace si.secdev.accessmanagement.Services
 {
-    public sealed class AuthorizeResponse
+    public sealed class LougoutResponse
     {
         private readonly IConfiguration _configuration;
         private static OpenidConfiguration? openidConfiguration;
 
-        public AuthorizeResponse(IConfiguration configuration)
+        public LougoutResponse(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public async Task<string> GetAuthorizeResponse(string company, Login @event)
+        public string GetLougoutResponse(string company, Logout @event)
         {
             if (openidConfiguration == null)
-                openidConfiguration = GetConfiguration(company , _configuration.GetSection("COMPANY_" + company.ToUpper()).Value);
+                openidConfiguration = GetConfiguration(company, _configuration.GetSection("COMPANY_" + company.ToUpper()).Value);
 
             var loginUrl = GererateRedirectLoginPageUrl(@event, openidConfiguration);
             //state.Scopes = @event.Scope?.Split(' ').ToList() ?? new List<string>();
@@ -27,23 +27,23 @@ namespace si.secdev.accessmanagement.Services
         private OpenidConfiguration GetConfiguration(string name, string url)
         {
             using var client = new HttpClient();
-            
+
             HttpResponseMessage resp = client.GetAsync(url).Result;
             if (!resp.IsSuccessStatusCode)
                 throw new Exception(resp.Content.ReadAsStringAsync().Result);
-            
+
             var objectConfig = JToken.Parse(resp.Content.ReadAsStringAsync().Result);
             OpenidConfiguration configuration = new OpenidConfiguration(name, objectConfig);
-            
+
             return configuration;
         }
 
-        private string GererateRedirectLoginPageUrl(Login @event, OpenidConfiguration openidConfiguration)
+        private string GererateRedirectLoginPageUrl(Logout @event, OpenidConfiguration openidConfiguration)
         {
-            string Url = $"{openidConfiguration.AuthorizationEndpoint}?client_id={@event.ClientId}&response_type=code" +
-                $"&redirect_uri={@event.RedirectUri}&response_mode=query&state={@event.State}&scope={openidConfiguration.ScopesSupported + $" {@event.Scope}"}";
-            
+            string Url = $"{openidConfiguration.LogoutEndpoint}?post_logout_redirect_uri={@event.Callback}";
+
             return Url;
         }
+
     }
 }
