@@ -18,21 +18,47 @@ namespace si.secdev.accessmanagement.Controllers
         }
         
         [HttpGet("{company}/authorize")]
-        public async Task<ActionResult> Authorize(string company, [FromQuery] Login @event)
+        public async Task<ActionResult> Authorize(string company, [FromQuery] Authorize @event)
         {
             try
             {
                 if (!_configuration.GetSection("COMPANY_" + company.ToUpper()).Exists())
                     return Unauthorized("The company is not implemented");
-                
-                AuthorizeResponse authorizeResponse = new(_configuration);
+
+                AuthorizeResponse authorizeResponse = new AuthorizeResponse(_configuration);
                 string Url = await authorizeResponse.GetAuthorizeResponse(company, @event);
+                
                 return Redirect(Url);
             }
             catch (Exception ex)
             {
                 return Unauthorized(ex);
             }
+        }
+
+        [HttpGet("{company}/authorize/login")]
+        public async Task<ActionResult> Login(string company, [FromQuery] Login @event)
+        {
+            try
+            {
+                if (!_configuration.GetSection("COMPANY_" + company.ToUpper()).Exists())
+                    return Unauthorized("The company is not implemented");
+
+                LoginResponse loginResponse = new LoginResponse(_configuration);
+                var redirectUri = await loginResponse.GetLoginResponse(company, @event);
+                
+                return Redirect(redirectUri.ToString());
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpGet("{company}/callback")]
+        public async void Callback(string company, string code)
+        {
+
         }
 
         [HttpPost("{company}/token")]

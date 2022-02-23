@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:19931",
+      "applicationUrl": "https://localhost:19931",
       "sslPort": 44329
     }
   },
@@ -14,10 +14,12 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7087;http://localhost:5087",
+      "applicationUrl": "https://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "COMPANY_AZURE": "https://login.microsoftonline.com/3737367d-87d3-46ca-b00f-21b50c428b5e/v2.0/.well-known/openid-configuration"
+        "COMPANY_AZURE": "https://login.microsoftonline.com/3737367d-87d3-46ca-b00f-21b50c428b5e/v2.0/.well-known/openid-configuration",
+        "REDIRECT_URI": "https://localhost:5001/connect/{company}/authorize/login",
+        "CALLBACK_URI": "https://localhost:5001/connect/{company}/callback"
       },
       "DefaultConnection": {
         "ConnectionString": "user=userdb;pass=3J2$%Zw&6ufG;"
